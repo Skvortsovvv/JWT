@@ -8,4 +8,5 @@ import (
 type Store interface {
 	RegisterUser(user *model.User) error
 	GetUser(login, password string) (uuid.UUID, error)
+	GetUserByID(id string) (*model.User, error)
 }

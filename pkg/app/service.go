@@ -1,10 +1,11 @@
 package app
 
 import (
+	"net/http"
+
 	"JWT/pkg/middleware"
 	"JWT/pkg/service"
 	"JWT/pkg/store"
-	"net/http"
 )
 
 type Implementation struct {

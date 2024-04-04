@@ -43,3 +43,14 @@ func (s *Storage) GetUser(login, password string) (uuid.UUID, error) {
 
 	return id, nil
 }
+
+func (s *Storage) GetUserByID(id string) (*model.User, error) {
+	var user model.User
+
+	query := fmt.Sprintf("SELECT * FROM %s WHERE id=$1", "users")
+	err := s.db.Get(&user, query, id)
+	if err != nil {
+		return nil, err
+	}
+	return &user, nil
+}

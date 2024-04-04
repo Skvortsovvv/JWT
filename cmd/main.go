@@ -1,12 +1,13 @@
 package main
 
 import (
+	"log"
+
 	"JWT/pkg/app"
 	"JWT/pkg/middleware"
 	"JWT/pkg/model"
 	"JWT/pkg/service"
 	"JWT/pkg/store"
-	"log"
 )
 
 func main() {

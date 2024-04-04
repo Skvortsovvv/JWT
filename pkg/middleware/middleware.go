@@ -1,12 +1,14 @@
 package middleware
 
 import (
-	"JWT/pkg/service"
-	"JWT/pkg/store"
 	"context"
-	"log"
 	"net/http"
 	"strings"
+
+	"JWT/pkg/service"
+	"JWT/pkg/store"
+	"github.com/google/uuid"
+	"github.com/pkg/errors"
 )
 
 const (
@@ -25,8 +27,6 @@ func NewMiddleware(storage store.Store, services *service.Service) *Middleware {
 
 func (m *Middleware) UserIdentity(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		log.Printf("WE ARE HERE")
-
 		header := r.Header.Get(authorizationHeader)
 		if header == "" {
 			http.Error(w, "empty auth header", http.StatusUnauthorized)
@@ -54,4 +54,15 @@ func (m *Middleware) UserIdentity(next http.Handler) http.Handler {
 
 		next.ServeHTTP(w, r)
 	})
+}
+
+func GetUserId(ctx context.Context) (uuid.UUID, error) {
+	id := ctx.Value(userCtx)
+
+	idStr, ok := id.(string)
+	if !ok {
+		return uuid.Nil, errors.New("user id is of invalid type")
+	}
+
+	return uuid.MustParse(idStr), nil
 }

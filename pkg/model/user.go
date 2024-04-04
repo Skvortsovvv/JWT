@@ -4,8 +4,8 @@ import "github.com/google/uuid"
 
 type User struct {
 	ID         uuid.UUID `db:"id"`
-	Login      string    `db:"login"`
-	Password   string    `db:"password"`
+	Login      string    `json:"login" db:"login"`
+	Password   string    `json:"password" db:"password"`
 	Permission int       `db:"permission"`
 }
 
